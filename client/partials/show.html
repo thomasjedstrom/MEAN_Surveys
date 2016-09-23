@@ -1,0 +1,37 @@
+<div id="navbar">
+	<a href="#/dashboard" ng-hide="dashboard">Dashboard</a> | <a href="#/" ng-click="logout()">Logout</a> 
+</div>
+
+<h3 class="fw">{{ survey.question }}</h3>
+<h4 class="fw">Click the Vote button to choose one.</h4>
+
+
+<div class="fw" ng-show="survey">
+	<table id="surveyTable" >
+		<tr>
+			<th>Option</th>
+			<th>Current Count of Votes</th>
+			<th>Action</th>
+		</tr>
+		<tr">
+			<td>{{ survey.option1.content }}</td>
+			<td>{{ survey.option1.votes }}</td>
+			<td><button ng-click="vote(1)">Vote</button></td>
+		</tr>
+		<tr">
+			<td>{{ survey.option2.content }}</td>
+			<td>{{ survey.option2.votes }}</td>
+			<td><button ng-click="vote(2)">Vote</button></td>
+		</tr>
+		<tr">
+			<td>{{ survey.option3.content }}</td>
+			<td>{{ survey.option3.votes }}</td>
+			<td><button ng-click="vote(3)">Vote</button></td>
+		</tr>
+		<tr">
+			<td>{{ survey.option4.content }}</td>
+			<td>{{ survey.option4.votes }}</td>
+			<td><button ng-click="vote(4)">Vote</button></td>
+		</tr>
+	</table>
+</div>
