@@ -6,49 +6,41 @@ angular.module('app')
 	function surveyFactory(){
 		var self = this;
 
+		
 ////////// httpPromise
-		function httpPromise(httpRequest){
-			var myPromise = $q.defer();
-			httpRequest.then(
-				function(res){
-					if(res.data.errors){
-						return myPromise.reject(res);
-					}else{
-						return myPromise.resolve(res);
-					}
-				},
-				function(err){
-					myPromise.reject(err);
-				}
+		function httpP(req){
+			let q = $q.defer();
+			req.then(
+				res=>(res.data.errors)?q.reject(res):q.resolve(res),
+				err=>q.reject(err)
 			);
-			return myPromise.promise;
+			return q.promise;
 		}
 
 ////////// Initialize Surveys in Factory
 		this.index = function(){
-			var newPromise = httpPromise($http.get('/surveys/index'))
+			let q = httpP($http.get('/surveys/index'))
 
-			newPromise.then(function(ret){
-				surveys = ret.data
-				return ret
-			})
-			return newPromise
+			q.then(
+				ret=>{
+					surveys = ret.data;
+					return ret;
+				}
+			)
+			return q
 		};
-
-
 
 ////////// Create Survey
 		this.create = function(survey){
-			var newPromise = httpPromise($http.post('/surveys/create', survey))
-			newPromise.then(
-				function(ret){
+			let q = httpP($http.post('/surveys/create', survey))
+			q.then(
+				ret=>{
 					surveys =[];
 					return ret;
 				},
-				function(err){
-					return err;
-				})
-			return newPromise;
+				err=>err
+			)
+			return q;
 		} 
 
 ////////// Get a Survey
@@ -58,40 +50,34 @@ angular.module('app')
 			}
 			if(surveys.length == 0){
 				return this.index()
-				.then(function(res){
-					return surveys.data.find(findSurvey)
-				})
+				.then(
+					res=>surveys.data.find(findSurvey)
+				)
 			}else{
-				return $q(function(resolve, reject){
-					resolve(surveys.data.find(findSurvey))
+				return $q((res, rej)=>{
+					res(surveys.data.find(findSurvey))
 				})
 			}
 		};
 
 /////////// Vote
 		this.vote = function(option, survey){
-			var newPromise = httpPromise($http.post('/surveys/vote/' + survey.id, option))
-			newPromise.then(function(ret){
+			return httpP($http.post('/surveys/vote/' + survey.id, option))
+			.then(ret=>{
 				surveys = [];
 				return ret;
 			})
-			return newPromise;
 		}
 
 ////////// Destroy
 		this.delete = function(id){
-			var newPromise = httpPromise($http.post('/surveys/delete/' + id))
-			newPromise.then(
-				function(res){
-					self.index();
-				},
-				function(err){
-					return err;
-				})
-			return newPromise; 
+			let q = httpP($http.post('/surveys/delete/' + id))
+			q.then(
+				res=>self.index(),
+				err=>err
+			)
+			return q; 
 		};
-
-
 	}
 	return new surveyFactory();
 }]);

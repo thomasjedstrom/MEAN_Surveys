@@ -3,25 +3,29 @@ angular.module('app')
 
 	$scope.current_user = userFactory.getCurrentUser();
 
-	var getSurvey = function(){
+	var getSurvey = ()=>{
 		surveyFactory.getSurvey($routeParams)
-		.then(function(res){
-			$scope.survey = res
-		})
+		.then(
+			res=>{
+				$scope.survey = res
+			}
+		)
 	};
 	getSurvey();
 
 
-	$scope.vote = function(option){
-		var answer = {}
+	$scope.vote = option=>{
+		let answer = {}
 		answer.id = "option" + String(option)
 		surveyFactory.vote(answer, $routeParams)
-		.then(function(res){
-			$scope.survey = res.data.data
-		})
+		.then(
+			res=>{
+				$scope.survey = res.data.data
+			}
+		)
 	}
 
-	$scope.logout = function(){
+	$scope.logout = ()=>{
 		userFactory.logout()
 		$location.url('/');
 	}

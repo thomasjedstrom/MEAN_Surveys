@@ -6,29 +6,20 @@ var mongoose 		= require('mongoose'),
 function surveysController(){
 	this.index = function(req,res){
 		return Surveys.find({}, function(err, result){
-			if(err){
-				return res.json({errors: err});
-			};
-			res.json({data: result});
+			(err) ? res.json({errors: err}) : res.json({data: result});
 		})
 	};
 
 	this.create = function(req,res){
 		return Surveys.create(req.body, function(err, result){
-			if(err){
-				return res.json({errors: err});
-			};
-			res.json({data: result});
+			(err) ? res.json({errors: err}) : res.json({data: result});
 		})
 	};
 
 	
 	this.delete = function(req,res){
 		return Surveys.remove({"_id": req.params.id}, function(err, result){
-			if(err){
-				return res.json({errors: err});
-			};
-			res.json({data: result});
+			(err) ? res.json({errors: err}) : res.json({data: result});
 		});
 	};
 
@@ -38,7 +29,7 @@ function surveysController(){
 				return res.json({errors: err});
 			};
 			result[req.body.id].votes += 1;
-			result.save()
+			result.save();
 			return res.json({data: result});
 		});
 	};

@@ -7,19 +7,13 @@ function usersController(){
 	var self = this;
 	this.index = function(req,res){
 		return Users.find({}, function(err, result){
-			if(err){
-				return res.json({errors: err});
-			};
-			res.json({data: result});
+			(err) ? res.json({errors: err}) : res.json({data: result});
 		})
 	};
 
 	this.create = function(req, res){
 		return Users.create(req.body, function(err, result){
-			if(err){
-				return res.json({errors: err})
-			};
-			return res.json({data: result});
+			(err) ? res.json({errors: err}) : res.json({data: result});
 		})
 	};
 

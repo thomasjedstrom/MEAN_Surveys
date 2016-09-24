@@ -8,56 +8,47 @@ angular.module('app')
 		var self = this;
 
 ////////// httpPromise
-		function httpPromise(httpRequest){
-			var myPromise = $q.defer();
-			httpRequest.then(
-				function(res){
-					if(res.data.errors){
-						return myPromise.reject(res);
-					}else{
-						return myPromise.resolve(res);
-					}
-				},
-				function(err){
-					myPromise.reject(err);
-				}
+		function httpP(req){
+			let q = $q.defer();
+			req.then(
+				res=>(res.data.errors)?q.reject(res):q.resolve(res),
+				err=>q.reject(err)
 			);
-			return myPromise.promise;
+			return q.promise;
 		}
 
 ////////// Login
 		this.login = function(user){
-			var newPromise = httpPromise($http.post('/users/login', user))
-			newPromise.then(function(res){
-				current_user = res.data.data;
-				return res;
-			})
-			.catch(function(error){
-				return error;
-			})
-			return newPromise;
+			return httpP($http.post('/users/login', user))
+			.then(
+				res=>{
+					current_user = res.data.data;
+					return res;
+				},
+				err=>err
+			)
 		};
 
 ////////// Initialize Users in Factory
 		this.index = function(){
-			var newPromise = httpPromise($http.get('/users/index'))
-
-			newPromise.then(function(ret){
-				users = ret.data
-				return ret
-			})
-			return newPromise
+			return httpPromise($http.get('/users/index'))
+			.then(
+				res=>{
+					users = res.data;
+					return res;
+				},
+				err=>err
+			)
 		};
 
 ////////// Logout
-		this.logout = function(user){
+		this.logout = user=>{
 			current_user = {};
 		};		
 
 ////////// Get Current User
-		this.getCurrentUser = function(){
-			return current_user;
-		}
+		this.getCurrentUser = ()=>current_user;
+	}
 
 	}
 	return new userFactory();
