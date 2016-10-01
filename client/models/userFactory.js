@@ -49,7 +49,5 @@ angular.module('app')
 ////////// Get Current User
 		this.getCurrentUser = ()=>current_user;
 	}
-
-	}
 	return new userFactory();
 }]);
