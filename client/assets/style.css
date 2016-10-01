@@ -34,11 +34,39 @@ th {
     background-color: gray;
     color: white;
 }
+.cd1{
+	min-width: 6em;
+	padding: 10px;
+	text-align: center;
+}
+.cd2{
+	min-width: 30em;
+	padding: 10px;
+}
+.cd3{
+	min-width: 10em;
+	padding: 10px;
+	text-align: center;
+}
+.cd4{
+	min-width: 10em;
+	padding: 10px;
+	text-align: center;
+}
+#cs1{
+	min-width: 40em;
+}
+#cs2{
+	min-width: 6em;
+}
+#cs3{
+	min-width: 6em;
+}
 
 /* Inputs/Forms */
 .btn{
 	display: inline-block;
-	margin: 25px;
+	margin: 5px;
 	text-decoration: none;
 	color: black;
 	border-radius: 0px;
@@ -59,6 +87,10 @@ th {
 input, textarea, select{
 	border: 3px solid black;
 	margin: 5px;
+}
+.surveyInput{
+	width: 40em;
+	line-height: 2em;
 }
 .error{
 	color: red;

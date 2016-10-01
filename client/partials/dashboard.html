@@ -17,10 +17,10 @@
 			<th>Action</th>
 		</tr>
 		<tr ng-repeat="survey in surveys | filter:filterSurveys">
-			<td>{{ survey.user.name }}</td>
-			<td><a href="#/poll/{{ survey._id }}">{{ survey.question }}</a></td>
-			<td>{{ survey.created_at }}</td>
-			<td><a href="" ng-if="survey.user._id == current_user._id" ng-click="delete(survey._id)">Delete</a></td>
+			<td class="cd1">{{ survey.user.name }}</td>
+			<td class="cd2"><a href="#/poll/{{ survey._id }}">{{ survey.question }}</a></td>
+			<td class="cd3">{{ survey.created_at | date: shortDate  }}</td>
+			<td class="cd4"><a href="" ng-if="survey.user._id == current_user._id" ng-click="delete(survey._id)" class="btn">Delete</a></td>
 		</tr>
 	</table>
 </div>
